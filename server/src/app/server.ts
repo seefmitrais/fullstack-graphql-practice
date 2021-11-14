@@ -12,6 +12,7 @@ import dotenv from 'dotenv';
 import { buildSchema } from "type-graphql";
 import { HelloResolver } from "./resolvers/hello";
 import { UserResolver } from "./resolvers/user";
+import { MovieResolver } from "./resolvers/movie";
 dotenv.config();
 
 const main = async () => {
@@ -29,7 +30,7 @@ const main = async () => {
   });
   await User.delete({});
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = Number(process.env.PORT || 4000);
   const app = express();
   app.use(cors({
     origin:'*'
@@ -38,7 +39,7 @@ const main = async () => {
   app.use(compression());
   const server = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver,UserResolver],
+      resolvers: [HelloResolver,UserResolver,MovieResolver],
       validate: false,
     }),
     context: ({ req, res }) => ({
@@ -50,7 +51,7 @@ const main = async () => {
   await server.applyMiddleware({ app, path: "/graphql" });
   const httpServer = createServer(app);
   httpServer.listen({ port: PORT }, (): void =>
-    console.log(`🚀GraphQL-Server is running on http://localhost:3000/graphql`)
+    console.log(`🚀GraphQL-Server is running on http://localhost:4000/graphql`)
   );
 };
 main().catch(error=>console.log(error));

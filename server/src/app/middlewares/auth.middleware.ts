@@ -8,7 +8,6 @@ export const isAuthenticated:MiddlewareFn<AppContext> = ({context},next) => {
         const token = authHeader && authHeader.split(' ')[1]
         var decoded:any = jwt.verify(token, process.env.SIGNING_KEY );
         context.res.user = <User>decoded.user;
-        console.log(context.res.user);
         return next();
     } catch (error) {
         throw new UnauthorizedError();

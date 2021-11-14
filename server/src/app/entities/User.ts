@@ -28,8 +28,8 @@ export class User extends BaseEntity {
     updatedAt: Date;
 
     @BeforeInsert()
-    hashPassword(){
-        this.password = bcrypt.hash(this.password, 10);
+    async hashPassword(){
+        this.password = await bcrypt.hash(this.password, 10);
     }
 
 }

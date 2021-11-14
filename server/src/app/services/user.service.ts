@@ -3,7 +3,7 @@ import { User } from "../entities/User"
 import { RegisterUser } from "../resolvers/inputs/RegisterUser.input";
 import { FieldError } from "../resolvers/types/FieldError.type";
 
-const registerUser = async (input:RegisterUser):Promise<{user:User}|{errors:FieldError[]}> => {
+export const registerUser = async (input:RegisterUser):Promise<{user:User}|{errors:FieldError[]}> => {
     let errors:FieldError[]=[];
     if(await isUsernameUsed(input.username)){
         errors.push({
@@ -21,15 +21,16 @@ const registerUser = async (input:RegisterUser):Promise<{user:User}|{errors:Fiel
         return {errors};
     }
     let userRepository = getRepository(User);
-    const user = await userRepository.save({
+    const newUser = userRepository.create({
         email:input.email,
         username:input.username,
         password:input.password
-    })
+    });
+    const user = await userRepository.save(newUser)
     return {user};
 };
 
-const getUsersPaginate = async (page:number,limit:number):Promise<{users:User[],count:number}> => {
+export const getUsersPaginate = async (page:number,limit:number):Promise<{users:User[],count:number}> => {
     const skip = Math.max(0,page-1)*limit;
     console.log(skip);
     const [users,count] = await getRepository(User)
@@ -40,7 +41,7 @@ const getUsersPaginate = async (page:number,limit:number):Promise<{users:User[],
     return {users,count};
 }
 
-const isUsernameUsed = async (username:string):Promise<Boolean> => {
+export const isUsernameUsed = async (username:string):Promise<Boolean> => {
     let userRepository = getRepository(User);
     const [_, total] = await userRepository.findAndCount({
         username:username
@@ -48,15 +49,10 @@ const isUsernameUsed = async (username:string):Promise<Boolean> => {
     return total > 0;
 };
 
-const isEmailUsed = async (email:string):Promise<Boolean> => {
+export const isEmailUsed = async (email:string):Promise<Boolean> => {
     let userRepository = getRepository(User);
     const [_, total] = await userRepository.findAndCount({
         email:email
     });
     return total > 0;
-};
-
-export {
-    registerUser,
-    getUsersPaginate
 };

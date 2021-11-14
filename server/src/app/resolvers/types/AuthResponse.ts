@@ -3,7 +3,7 @@ import { User } from "../../entities/User";
 import { FieldError } from "./FieldError.type";
 
 @ObjectType()
-export class RegisterResponse{
+export class AuthResponse{
     @Field(() => [FieldError], { nullable: true })
     errors?: FieldError[];
 
