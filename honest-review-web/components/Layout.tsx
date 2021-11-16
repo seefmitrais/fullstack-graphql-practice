@@ -5,7 +5,7 @@ export const Layout: React.FC<any> = ({ children }) => {
   return (
     <>
       <NavBar />
-      <div className="container w-full h-full">
+      <div className="w-full h-full">
         {children}
       </div>
       {/* <Wrapper variant={variant}></Wrapper> */}
