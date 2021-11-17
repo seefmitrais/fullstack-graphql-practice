@@ -18,6 +18,6 @@ export const Guard: React.FC<GuardProps> = ({children, type}) => {
                 router.push('/login');
             }
         }
-    }, []);
+    }, [globalState]);
     return <>{children}</>;
 }

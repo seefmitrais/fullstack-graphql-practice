@@ -38,7 +38,7 @@ export const NavBar: React.FC = () => {
                         <Link href="/reviews">
                             <a href="#" className="py-5 px-3 text-gray-700 hover:text-gray-900">Reviews</a>
                         </Link>
-                        <Link href="/movies-series">
+                        <Link href="/movie-series">
                             <a href="#" className="py-5 px-3 text-gray-700 hover:text-gray-900">Movies/Series</a>
                         </Link>
                     </div>

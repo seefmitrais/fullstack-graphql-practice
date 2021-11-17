@@ -1,0 +1,9 @@
+query SearchMovies($keyword: String!){
+  searchMovies(keyword:$keyword){
+    movies{
+      id
+      title
+      image
+    }
+  }
+}
